@@ -5,9 +5,11 @@ import {
   TouchableOpacity,
   StyleSheet
 } from 'react-native';
-import moment from 'moment';
+import Moment from 'moment';
 import 'moment/locale/fr'; 
-import 'moment-range';
+import { extendMoment } from 'moment-range';
+
+const moment = extendMoment(Moment)
 
 moment.locale("fr")
 
@@ -92,7 +94,8 @@ export const Week = (props) => {
   const days = [];
   const endOfWeek = startOfWeek.clone().endOf('isoweek');
 
-  moment.range(startOfWeek, endOfWeek).by('days', (day) => {
+  Array.from(moment.range(startOfWeek, endOfWeek).by('days')).map((day) => {
+    console.log(day)
     const onPress = () => {
       if (isDateBlocked(day)) {
         onDisableClicked(day);
@@ -181,7 +184,7 @@ export const Month = (props) => {
   const endOfMonth = focusedMonth.clone().endOf('month');
   const weekRange = moment.range(currentDate.clone().startOf('isoweek'), currentDate.clone().endOf('isoweek'));
 
-  weekRange.by('days', (day) => {
+  Array.from(weekRange.by('days')).map((day) => {
     dayNames.push(
       <Text key={day.date()} style={[styles.dayName, textColor ? { color: textColor } : null]}>
         {day.format('ddd')}
@@ -189,7 +192,7 @@ export const Month = (props) => {
     );
   });
 
-  moment.range(startOfMonth, endOfMonth).by('weeks', (week) => {
+  Array.from(moment.range(startOfMonth, endOfMonth).by('weeks')).map((week) => {
     weeks.push(
       <Week
         key={week}
