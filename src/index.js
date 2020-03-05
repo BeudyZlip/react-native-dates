@@ -11,46 +11,7 @@ import 'moment-range';
 
 moment.locale("fr")
 
-// type DatesType = {
-//   range: boolean,
-//   date: ?moment,
-//   startDate: ?moment,
-//   endDate: ?moment,
-//   focusedInput: 'startDate' | 'endDate',
-//   onDatesChange: (date: { date?: ?moment, startDate?: ?moment, endDate?: ?moment }) => void,
-//   isDateBlocked: (date: moment) => boolean,
-//   onDisableClicked: (date: moment) => void
-// }
-
-// type MonthType = {
-//   range: boolean,
-//   date: ?moment,
-//   startDate: ?moment,
-//   endDate: ?moment,
-//   focusedInput: 'startDate' | 'endDate',
-//   currentDate: moment,
-//   focusedMonth: moment,
-//   onDatesChange: (date: { date?: ?moment, startDate?: ?moment, endDate?: ?moment }) => void,
-//   isDateBlocked: (date: moment) => boolean,
-//   onDisableClicked: (date: moment) => void
-// }
-
-// type WeekType = {
-//   range: boolean,
-//   date: ?moment,
-//   startDate: ?moment,
-//   endDate: ?moment,
-//   focusedInput: 'startDate' | 'endDate',
-//   startOfWeek: moment,
-//   onDatesChange: (date: { date?: ?moment, startDate?: ?moment, endDate?: ?moment }) => void,
-//   isDateBlocked: (date: moment) => boolean,
-//   onDisableClicked: (date: moment) => void
-// }
-
 const styles = StyleSheet.create({
-  calendar: {
-    // backgroundColor: 'rgb(255, 255, 255)'
-  },
   heading: {
     flexDirection: 'row',
     justifyContent: 'space-between',
