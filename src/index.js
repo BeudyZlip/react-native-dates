@@ -95,14 +95,14 @@ const styles = StyleSheet.create({
 const dates = (startDate, endDate, focusedInput: 'startDate' | 'endDate') => {
   if (focusedInput === 'startDate') {
     if (startDate && endDate) {
-      return ({ startDate, endDate: null, focusedInput: 'endDate' });
+      return ({ startDate, endDate, focusedInput: 'endDate' });
     }
     return ({ startDate, endDate, focusedInput: 'endDate' });
   }
 
   if (focusedInput === 'endDate') {
     if (endDate && startDate && endDate.isBefore(startDate)) {
-      return ({ startDate: endDate, endDate: null, focusedInput: 'endDate' });
+      return ({ startDate: endDate, endDate, focusedInput: 'endDate' });
     }
     return ({ startDate, endDate, focusedInput: 'startDate' });
   }
@@ -125,6 +125,7 @@ export const Week = (props) => {
     dayBackgroundColor,
     daySelectedColor,
     format,
+    focusedMonth,
   } = props;
 
   const days = [];
@@ -162,6 +163,7 @@ export const Week = (props) => {
 
     const isBlocked = isDateBlocked(day);
     const isSelected = isDateSelected();
+    const isCurrentMonth = !focusedMonth.isSame(day, 'month')
 
     const style = [
       styles.day,
@@ -182,11 +184,20 @@ export const Week = (props) => {
           style,
           dayBackgroundColor ? { backgroundColor: dayBackgroundColor } : null,
           daySelectedColor && isSelected ? { backgroundColor: daySelectedColor } : null,
+          isCurrentMonth ? { backgroundColor: 'transparent' } : null,
         ]}
         onPress={onPress}
         disabled={isBlocked && !onDisableClicked}
       >
-        <Text style={[styleText, textColor ? { color: textColor } : null]}>{day.date()}</Text>
+        <Text
+          style={[
+            styleText,
+            textColor ? { color: textColor } : null,
+            isCurrentMonth ? { opacity: 0.5 } : null,
+          ]}
+        >
+          {day.date()}
+        </Text>
       </TouchableOpacity>
     );
   });
