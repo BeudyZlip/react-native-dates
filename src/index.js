@@ -95,7 +95,6 @@ export const Week = (props) => {
   const endOfWeek = startOfWeek.clone().endOf('isoweek');
 
   Array.from(moment.range(startOfWeek, endOfWeek).by('days')).map((day) => {
-    console.log(day)
     const onPress = () => {
       if (isDateBlocked(day)) {
         onDisableClicked(day);
