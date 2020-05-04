@@ -3,9 +3,11 @@ import {
   Text,
   View,
   TouchableOpacity,
-  StyleSheet
+  StyleSheet,
+  Platform,
 } from 'react-native';
 import Moment from 'moment';
+import { Dropdown } from 'react-native-material-dropdown';
 import 'moment/locale/fr'; 
 import { extendMoment } from 'moment-range';
 
@@ -52,6 +54,23 @@ const styles = StyleSheet.create({
   },
   dText: {
     color: 'rgb(252, 252, 252)'
+  },
+  piker: {
+    height: 25,
+    width: 100,
+    flex: 0,
+    fontSize: 12,
+    zIndex: 2,
+    padding: 0,
+    ...Platform.select({
+      web: {
+        outline: 'none',
+        lineHeight: 25,
+      },
+    }),
+  },
+  monthPiker: {
+    textAlign: 'right',
   }
 });
 
@@ -233,6 +252,105 @@ export default class Dates extends Component {
     }
   }
 
+  renderMonthYear = () => {
+    const months = _.map(moment.months(), (month, index) => ({
+      id: index,
+      value: month,
+      label: month.charAt(0).toUpperCase() + month.substr(1),
+    }))
+    
+    const years = () => {
+      const years = []
+      const dateStart = moment().subtract(100, 'y')
+      const dateEnd = moment().add(100, 'y')
+      let i = 0
+      while (dateEnd.diff(dateStart, 'years') >= 0) {
+        years.push({
+          id: i,
+          label: dateStart.format('YYYY'),
+          value: dateStart.format('YYYY'),
+        })
+        i += 1
+        dateStart.add(1, 'year')
+      }
+      return years
+    }
+
+    changeMonth = (month) => {
+      const { focusedMonth } = this.state
+      const day = focusedMonth.format('DD')
+      const year = focusedMonth.format('YYYY')
+      const i = (_.findIndex(months, ['value', month]) + 1).toString()
+      const currentMonth = i.length === 1 ? `0${i}` : i
+      this.setState({ focusedMonth: moment(`${day}${currentMonth}${year}`, 'DDMMYYYY') })
+    }
+
+    changeYear = (year) => {
+      const { focusedMonth } = this.state
+      const day = focusedMonth.format('DD')
+      const month = focusedMonth.format('MM')
+      this.setState({ focusedMonth: moment(`${day}${month}${year}`, 'DDMMYYYY')})
+    }
+ 
+    return (
+      <View style={{ flexDirection: 'row' }}>
+        <View style={{ paddingHorizontal: 5, flex: 1 }}>
+          <Dropdown
+            value={this.state.focusedMonth.format('MMMM')}
+            data={months}
+            fontSize={12}
+            onChangeText={changeMonth}
+            inputStyle={[
+              styles.piker,
+              styles.monthPiker,
+              { color: this.props.textColor },
+            ]}
+            itemTextStyle={{ color: `${this.props.textColor}80` }}
+            pickerStyle={{
+              backgroundColor: this.props.backgroundColor,
+              borderColor: this.props.borderColor,
+              borderWidth: 1,
+            }}
+            itemColor={this.props.textColor}
+            dropdownOffset={{
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        </View>
+        <View style={{ paddingHorizontal: 5, flex: 1 }}>
+          <Dropdown
+            value={this.state.focusedMonth.format('YYYY')}
+            data={years()}
+            fontSize={12}
+            onChangeText={changeYear}
+            inputStyle={[
+              styles.piker,
+              { color: this.props.textColor },
+            ]}
+            itemTextStyle={{ color: `${this.props.textColor}80` }}
+            pickerStyle={{
+              backgroundColor: this.props.backgroundColor,
+              borderColor: this.props.borderColor,
+              borderWidth: 1,
+            }}
+            itemColor={this.props.textColor }
+            dropdownOffset={{
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+            }}
+          />
+        </View>
+      </View>
+      
+    )
+    // this.state.focusedMonth.format('MMMM YYYY').charAt(0).toUpperCase() + this.state.focusedMonth.format('MMMM YYYY').substr(1)
+  }
+
   render() {
     const { label } = this.props
     const previousMonth = () => {
@@ -253,7 +371,7 @@ export default class Dates extends Component {
             <Previous />
           </TouchableOpacity>
           <Text style={this.props.textColor ? { color: this.props.textColor } : null}>
-            {this.state.focusedMonth.format('MMMM YYYY').charAt(0).toUpperCase() + this.state.focusedMonth.format('MMMM YYYY').substr(1)}
+            <this.renderMonthYear />
           </Text>
           <TouchableOpacity onPress={nextMonth}>
             <Next />
