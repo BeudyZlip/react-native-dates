@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     padding: 0,
     ...Platform.select({
       web: {
-        outline: 'none',
+        // outline: 'none',
         lineHeight: 25,
       },
     }),
@@ -303,7 +303,14 @@ export default class Dates extends Component {
             inputStyle={[
               styles.piker,
               styles.monthPiker,
-              { color: this.props.textColor },
+              {
+                color: this.props.textColor,
+                ...Platform.select({
+                  web: {
+                    lineHeight: 25,
+                  },
+                })
+              },
             ]}
             itemTextStyle={{ color: `${this.props.textColor}80` }}
             pickerStyle={{
@@ -328,7 +335,14 @@ export default class Dates extends Component {
             onChangeText={changeYear}
             inputStyle={[
               styles.piker,
-              { color: this.props.textColor },
+              {
+                color: this.props.textColor,
+                ...Platform.select({
+                  web: {
+                    lineHeight: 25,
+                  },
+                })
+              },
             ]}
             itemTextStyle={{ color: `${this.props.textColor}80` }}
             pickerStyle={{
