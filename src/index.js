@@ -295,7 +295,7 @@ export default class Dates extends Component {
  
     return (
       <View style={{ flexDirection: 'row' }}>
-        <View style={{ paddingHorizontal: 5, flex: 1 }}>
+        <View style={{ paddingHorizontal: 5, flexGrow: 1 }}>
           <Dropdown
             value={this.state.focusedMonth.format('MMMM')}
             data={months}
@@ -329,7 +329,7 @@ export default class Dates extends Component {
             }}
           />
         </View>
-        <View style={{ paddingHorizontal: 5, flex: 1 }}>
+        <View style={{ paddingHorizontal: 5, flexGrow: 1 }}>
           <Dropdown
             value={this.state.focusedMonth.format('YYYY')}
             data={years()}
