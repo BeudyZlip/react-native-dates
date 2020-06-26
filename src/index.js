@@ -7,6 +7,7 @@ import {
   Platform,
 } from 'react-native';
 import Moment from 'moment';
+import _ from 'lodash';
 import { Dropdown } from 'react-native-material-dropdown';
 import 'moment/locale/fr'; 
 import { extendMoment } from 'moment-range';
@@ -298,6 +299,7 @@ export default class Dates extends Component {
           <Dropdown
             value={this.state.focusedMonth.format('MMMM')}
             data={months}
+            lineWidth={0}
             fontSize={12}
             onChangeText={changeMonth}
             inputStyle={[
@@ -332,6 +334,7 @@ export default class Dates extends Component {
             value={this.state.focusedMonth.format('YYYY')}
             data={years()}
             fontSize={12}
+            lineWidth={0}
             onChangeText={changeYear}
             inputStyle={[
               styles.piker,
