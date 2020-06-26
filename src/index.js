@@ -363,9 +363,7 @@ export default class Dates extends Component {
           />
         </View>
       </View>
-      
     )
-    // this.state.focusedMonth.format('MMMM YYYY').charAt(0).toUpperCase() + this.state.focusedMonth.format('MMMM YYYY').substr(1)
   }
 
   render() {
@@ -387,9 +385,9 @@ export default class Dates extends Component {
           <TouchableOpacity onPress={previousMonth}>
             <Previous />
           </TouchableOpacity>
-          <Text style={this.props.textColor ? { color: this.props.textColor } : null}>
-            <this.renderMonthYear />
-          </Text>
+          <View style={this.props.textColor ? { color: this.props.textColor } : null}>
+            {this.renderMonthYear()}
+          </View>
           <TouchableOpacity onPress={nextMonth}>
             <Next />
           </TouchableOpacity>
