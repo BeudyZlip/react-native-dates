@@ -253,6 +253,28 @@ export default class Dates extends Component {
     }
   }
 
+  componentDidUpdate(nextProps) {
+    const {
+      date,
+      startDate,
+      format,
+    } = this.props
+    const { date: dateOld } = nextProps
+    if (date !== dateOld) {
+      let currentDate = moment()
+      if (date) currentDate = moment(date, format)
+      else if ( startDate ) currentDate = moment(startDate, format)
+  
+      let focusedMonth = moment().startOf('month')
+      if (date) focusedMonth = moment(date, format).startOf('month')
+      else if ( startDate ) focusedMonth =  moment(startDate, format).startOf('month')
+      this.setState({
+        currentDate,
+        focusedMonth,
+      })
+    }
+  }
+
   renderMonthYear = () => {
     const months = _.map(moment.months(), (month, index) => ({
       id: index,
