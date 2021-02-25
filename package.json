@@ -30,7 +30,7 @@
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "moment-range": "4.0.2",
-    "react-native-material-dropdown": "^0.11.1"
+    "react-native-material-dropdown": "varburg/react-native-material-dropdown#RN63.4Patch"
   },
   "peerDependencies": {
     "react": "^16.8.6",
