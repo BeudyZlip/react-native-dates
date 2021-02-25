@@ -1,6 +1,6 @@
 {
   "name": "react-native-dates",
-  "version": "2.1.8",
+  "version": "2.1.9",
   "description": "Date and daterange picker for React Native (iOS and Android)",
   "main": "src/index.js",
   "scripts": {
@@ -29,12 +29,12 @@
   "dependencies": {
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
-    "moment-range": "4.0.2"
+    "moment-range": "4.0.2",
+    "react-native-material-dropdown": "^0.1.11"
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "react-native": "^0.60.4",
-    "react-native-material-dropdown": "^0.1.11"
+    "react-native": "^0.60.4"
   },
   "devDependencies": {
     "babel-eslint": "^7.1.1",
