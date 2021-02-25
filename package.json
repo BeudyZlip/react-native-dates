@@ -43,6 +43,6 @@
     "eslint-plugin-jsx-a11y": "^4.0.0",
     "eslint-plugin-react": "^6.10.0",
     "flow-bin": "^0.41.0",
-    "react-native-material-dropdown": "BeudyZlip/react-native-material-dropdown"
+    "react-native-material-dropdown": "^0.1.11"
   }
 }
