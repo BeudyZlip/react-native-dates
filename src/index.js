@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Moment from 'moment';
 import _ from 'lodash';
-import { Dropdown } from 'react-native-material-dropdown';
+import DropDownPicker from 'react-native-dropdown-picker'
 import 'moment/locale/fr'; 
 import { extendMoment } from 'moment-range';
 
@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 5,
     paddingHorizontal: 10,
+    zIndex: 6,
   },
   week: {
     flexDirection: 'row'
@@ -63,6 +64,11 @@ const styles = StyleSheet.create({
     fontSize: 12,
     zIndex: 2,
     padding: 0,
+    borderRadius: 0,
+    borderTopWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderBottomWidth: 1,
     ...Platform.select({
       web: {
         // outline: 'none',
@@ -284,8 +290,8 @@ export default class Dates extends Component {
     
     const years = () => {
       const years = []
-      const dateStart = moment().subtract(100, 'y')
-      const dateEnd = moment().add(100, 'y')
+      const dateStart = moment().subtract(20, 'y')
+      const dateEnd = moment().add(20, 'y')
       let i = 0
       while (dateEnd.diff(dateStart, 'years') >= 0) {
         years.push({
@@ -314,74 +320,64 @@ export default class Dates extends Component {
       const month = focusedMonth.format('MM')
       this.setState({ focusedMonth: moment(`${day}${month}${year}`, 'DDMMYYYY')})
     }
- 
+
+    const newMonths = _.map(months, (m) => m.value === this.state.focusedMonth.format('MMMM')
+      ? { ...m, selected: true }
+      : m
+    )
+
     return (
       <View style={{ flexDirection: 'row' }}>
         <View style={{ paddingHorizontal: 5, flexGrow: 1 }}>
-          <Dropdown
-            value={this.state.focusedMonth.format('MMMM')}
-            data={months}
-            lineWidth={0}
-            fontSize={12}
-            onChangeText={changeMonth}
-            inputStyle={[
+          <DropDownPicker
+            items={newMonths}
+            showArrow={false}
+            autoScrollToDefaultValue
+            defaultValue={this.state.focusedMonth.format('MMMM')}
+            labelStyle={{ color: this.props.textColor }}
+            style={[
               styles.piker,
               styles.monthPiker,
               {
                 color: this.props.textColor,
-                ...Platform.select({
-                  web: {
-                    lineHeight: 25,
-                  },
-                })
+                backgroundColor: this.props.backgroundColor,
+                borderColor: this.props.borderColor,
               },
             ]}
-            itemTextStyle={{ color: `${this.props.textColor}80` }}
-            pickerStyle={{
+            activeLabelStyle={{ fontWeight: 'bold' }}
+            itemStyle={{ justifyContent: 'flex-end' }}
+            dropDownStyle={{
               backgroundColor: this.props.backgroundColor,
-              borderColor: this.props.borderColor,
               borderWidth: 1,
+              borderColor: this.props.borderColor,
             }}
-            itemColor={this.props.textColor}
-            dropdownOffset={{
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}
+            onChangeItem={(item) => changeMonth(item.value)}
           />
         </View>
         <View style={{ paddingHorizontal: 5, flexGrow: 1 }}>
-          <Dropdown
-            value={this.state.focusedMonth.format('YYYY')}
-            data={years()}
-            fontSize={12}
-            lineWidth={0}
-            onChangeText={changeYear}
-            inputStyle={[
+          <DropDownPicker
+            items={_.reverse(years())}
+            showArrow={false}
+            autoScrollToDefaultValue
+            defaultValue={this.state.focusedMonth.format('YYYY')}
+            labelStyle={{ color: this.props.textColor }}
+            style={[
               styles.piker,
+              styles.monthPiker,
               {
                 color: this.props.textColor,
-                ...Platform.select({
-                  web: {
-                    lineHeight: 25,
-                  },
-                })
+                backgroundColor: this.props.backgroundColor,
+                borderColor: this.props.borderColor,
               },
             ]}
-            itemTextStyle={{ color: `${this.props.textColor}80` }}
-            pickerStyle={{
+            activeLabelStyle={{ fontWeight: 'bold' }}
+            itemStyle={{ justifyContent: 'flex-end' }}
+            dropDownStyle={{
               backgroundColor: this.props.backgroundColor,
-              borderColor: this.props.borderColor,
               borderWidth: 1,
+              borderColor: this.props.borderColor,
             }}
-            itemColor={this.props.textColor }
-            dropdownOffset={{
-              top: 0,
-              bottom: 0,
-              left: 0,
-              right: 0,
-            }}
+            onChangeItem={(item) => changeYear(item.value)}
           />
         </View>
       </View>
